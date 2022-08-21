@@ -1,0 +1,23 @@
+{
+  "name": "fish",
+  "version": "1.0.0",
+  "description": "开发摸鱼中后台搭建平台",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr-zsy/fish.git"
+  },
+  "keywords": [
+    "fish",
+    "衣乌安"
+  ],
+  "author": "衣乌安",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mr-zsy/fish/issues"
+  },
+  "homepage": "https://github.com/Mr-zsy/fish#readme"
+}

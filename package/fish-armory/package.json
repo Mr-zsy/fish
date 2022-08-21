@@ -1,0 +1,15 @@
+{
+  "name": "@fish/armory",
+  "version": "1.0.0",
+  "description": "物料库",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fish",
+    "衣乌安"
+  ],
+  "author": "衣乌安",
+  "license": "ISC"
+}
