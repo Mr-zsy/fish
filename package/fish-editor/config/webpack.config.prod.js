@@ -10,11 +10,11 @@ const {config: baseConfig, r} = require('./webpack.config.base.js');
  */
 const config = merge(baseConfig, {
     mode: 'prod',
-    devServer: {
-        compress: true,
-        open: true,
-        port: 9000,
-        historyApiFallback: true,
+    output: {
+        filename: 'index.js',
+        path: r('./dist'),
+        publicPath: r('./dist/assets'),
+        chunkFilename: '[name]-[chunkhash].js',
     },
 });
 

@@ -1,15 +1,21 @@
 {
   "name": "@fish/render",
   "version": "1.0.0",
-  "description": "渲染器",
+  "description": "渲染模板",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
-    "fish",
+    "Fish",
     "衣乌安"
   ],
   "author": "衣乌安",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "dependencies": {
+    "art-template": "^4.13.2"
+  }
 }

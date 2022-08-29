@@ -1,0 +1,3 @@
+<{{$data.data.name}} {{each $data.data.props}}{{$value.name}}={{if $value.valueType === 'string'}}'{{$value.value}}'{{else}}{{{$value.value}}}{{/if}}{{/each}}>
+    {{if $data.data.children.length}}{{$import.utils.formateComponentJSX($data.data.children)}}{{/if}}
+</{{$data.data.name}}>

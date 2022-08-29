@@ -1,0 +1,79 @@
+import React, {
+	{{if $data.XState.length}} useState, {{/if}}
+	{{if $data.XRef.length}} useRef, {{/if}}
+	{{if $data.XMemo.length}} useMemo, {{/if}}
+	{{if $data.XEffect.length}} useEffect, {{/if}}
+	{{if $data.XLayoutEffect.length}} useLayoutEffect, {{/if}}
+	{{if $data.XCallback.length}} useCallback, {{/if}}
+} from 'react';
+
+
+interface PropsType {
+
+
+}
+
+
+const {{$data.componentName}}: React.FC<PropsType> = props => {
+    
+    // useState
+  	{{if $data.XState.length}}
+  		{{each $data.XState}}
+      		[{{$value.hooksName}}, set{{$imports.utils.firstToUpper($value.hooksName)}}] = useState<{{$value.type || 'any'}}>({{$value.params}});
+    	{{/each}}
+	{{/if}}
+
+    // useRef
+  	{{if $data.XRef.length}}
+  		{{each $data.XRef}}
+      	{{$value.hooksName}} = useRef<{{$value.type || 'any'}}>({{$value.params}});
+    	{{/each}}
+	{{/if}}
+
+    // useLayoutEffect
+    {{if $data.XLayoutEffect.length}}
+  		{{each $data.XLayoutEffect}}
+      	    useEffect(
+				{{$import.utils.getFunc($value.funcContent)}},
+				[{{each $value.deps}}{{$value}}{{/each}}]
+			);
+    	{{/each}}
+	{{/if}}
+
+    // useEffect
+    {{if $data.XEffect.length}}
+  		{{each $data.XEffect}}
+      	    useEffect(
+				{{$import.utils.getFunc($value.funcContent)}},
+				[{{each $value.deps}}{{$value}}{{/each}}]
+			);
+    	{{/each}}
+	{{/if}}
+
+    // useCallback
+  	{{if $data.XCallback.length}}
+  		{{each $data.XCallback}}
+      	    const {{$value.funcName}}  = useCallback(
+				  {{$import.utils.getFunc($value.funcContent, $value.params)}}, 
+				  [{{each $value.deps}}{{$value}}{{/each}}]
+				);
+    	{{/each}}
+	{{/if}}
+
+    // useMemo
+    {{if $data.XMemo.length}}
+  		{{each $data.XMemo}}
+      	    const {{$data.XMemo.memoName}}  = useMemo(
+				{{$import.utils.getFunc($value.funcContent)}},
+				[{{each $value.deps}}{{$value}}{{/each}}]
+			);
+    	{{/each}}
+	{{/if}}
+
+    return (
+        {{$import.utils.formateComponentJSX($data.XReturn)}}
+    )
+}
+
+
+export default {{$data.componentName}};
