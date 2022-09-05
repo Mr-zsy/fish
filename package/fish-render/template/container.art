@@ -1,11 +1,4 @@
-import React, {
-	{{if $data.XState.length}} useState, {{/if}}
-	{{if $data.XRef.length}} useRef, {{/if}}
-	{{if $data.XMemo.length}} useMemo, {{/if}}
-	{{if $data.XEffect.length}} useEffect, {{/if}}
-	{{if $data.XLayoutEffect.length}} useLayoutEffect, {{/if}}
-	{{if $data.XCallback.length}} useCallback, {{/if}}
-} from 'react';
+import React, { {{each $imports.utils.objectKeys($data.Hooks)}}{{if $data.Hooks[$value].length}}{{$value}},{{/if}}{{/each}} } from 'react';
 
 
 interface PropsType {
@@ -15,63 +8,54 @@ interface PropsType {
 
 
 const {{$data.componentName}}: React.FC<PropsType> = props => {
-    
-    // useState
-  	{{if $data.XState.length}}
-  		{{each $data.XState}}
-      		[{{$value.hooksName}}, set{{$imports.utils.firstToUpper($value.hooksName)}}] = useState<{{$value.type || 'any'}}>({{$value.params}});
-    	{{/each}}
-	{{/if}}
 
-    // useRef
-  	{{if $data.XRef.length}}
-  		{{each $data.XRef}}
-      	{{$value.hooksName}} = useRef<{{$value.type || 'any'}}>({{$value.params}});
-    	{{/each}}
-	{{/if}}
+// useState
+{{if $data.Hooks.useState.length}}{{each $data.Hooks.useState}}
+	[{{$value.stateName}}, set{{$imports.utils.firstToUpper($value.stateName)}}] = useState<{{$value.type || 'any'}}>({{$value.params}});
+{{/each}}{{/if}}
 
-    // useLayoutEffect
-    {{if $data.XLayoutEffect.length}}
-  		{{each $data.XLayoutEffect}}
-      	    useEffect(
-				{{$import.utils.getFunc($value.funcContent)}},
-				[{{each $value.deps}}{{$value}}{{/each}}]
-			);
-    	{{/each}}
-	{{/if}}
+// useRef
+{{if $data.Hooks.useRef.length}}{{each $data.Hooks.useRef}}
+	const {{$value.refName}} = useRef<{{$value.type || 'any'}}>({{$value.params}});
+{{/each}}{{/if}}
 
-    // useEffect
-    {{if $data.XEffect.length}}
-  		{{each $data.XEffect}}
-      	    useEffect(
-				{{$import.utils.getFunc($value.funcContent)}},
-				[{{each $value.deps}}{{$value}}{{/each}}]
-			);
-    	{{/each}}
-	{{/if}}
+// useLayoutEffect
+{{if $data.Hooks.useLayoutEffect.length}}{{each $data.Hooks.useLayoutEffect}}
+	useLayoutEffect(() => {
+	{{$imports.utils.getFuncBody($value.funcContent)}},
+	}, [{{each $value.deps}}{{$value}}{{/each}}]);
+{{/each}}{{/if}}
 
-    // useCallback
-  	{{if $data.XCallback.length}}
-  		{{each $data.XCallback}}
-      	    const {{$value.funcName}}  = useCallback(
-				  {{$import.utils.getFunc($value.funcContent, $value.params)}}, 
-				  [{{each $value.deps}}{{$value}}{{/each}}]
-				);
-    	{{/each}}
-	{{/if}}
+// useEffect
+{{if $data.Hooks.useEffect.length}}{{each $data.Hooks.useEffect}}
+	useEffect(() => {
+		{{$imports.utils.getFuncBody($value.funcContent)}},
+	}, [{{each $value.deps}}{{$value}}{{/each}}]);
+{{/each}}{{/if}}
 
-    // useMemo
-    {{if $data.XMemo.length}}
-  		{{each $data.XMemo}}
-      	    const {{$data.XMemo.memoName}}  = useMemo(
-				{{$import.utils.getFunc($value.funcContent)}},
-				[{{each $value.deps}}{{$value}}{{/each}}]
-			);
-    	{{/each}}
-	{{/if}}
+// useCallback
+{{if $data.Hooks.useCallback.length}}{{each $data.Hooks.useCallback}}
+	const {{$value.funcName}} = useCallback({{$imports.utils.isAsyncFunc($value.funcContent) ? 'async' : ''}} ({{$imports.utils.getFuncParams($value.funcContent, $value.params)}}) => {
+				{{$imports.utils.getFuncBody($value.funcContent)}}
+			}, 
+			[{{each $value.deps}}{{$value}}{{/each}}]
+		);
+{{/each}}{{/if}}
+
+// useMemo
+{{if $data.Hooks.useMemo.length}}
+{{each $data.Hooks.useMemo}}
+	const {{$data.Hooks.useMemo.memoName}}  = useMemo(
+		{{$imports.utils.getFunc($value.funcContent)}},
+		[{{each $value.deps}}{{$value}}{{/each}}]
+	);
+{{/each}}
+{{/if}}
 
     return (
-        {{$import.utils.formateComponentJSX($data.XReturn)}}
+{{if $data.Return.length}}{{each $data.Return}}
+		{{include './component.art' $value}}
+{{/each}}{{/if}}
     )
 }
 

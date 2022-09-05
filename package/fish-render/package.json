@@ -16,6 +16,7 @@
     "jest": "^27.5.1"
   },
   "dependencies": {
-    "art-template": "^4.13.2"
+    "art-template": "^4.13.2",
+    "chalk": "^4.1.2"
   }
 }

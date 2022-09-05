@@ -1,3 +1,9 @@
-<{{$data.data.name}} {{each $data.data.props}}{{$value.name}}={{if $value.valueType === 'string'}}'{{$value.value}}'{{else}}{{{$value.value}}}{{/if}}{{/each}}>
-    {{if $data.data.children.length}}{{$import.utils.formateComponentJSX($data.data.children)}}{{/if}}
+<{{$data.data.name}} 
+    {{each $data.data.props}}
+        {{$value.name}} = {{if $value.valueType === 'string'}}'{{$value.value}}'{{else}}{ {{$value.value}} }{{/if}}
+    {{/each}}
+>
+    {{if $data.data.children.length}}{{each $data.data.children}}
+            {{include './component.art' $value}}
+    {{/each}}{{/if}}
 </{{$data.data.name}}>

@@ -11,19 +11,19 @@ export interface XHooks {
   result: any
 }  
 
-export interface XState {
+export interface useState {
 	stateName: string;
   type: string;
   default: any;
 }
 
-export interface XRef {
+export interface useRef {
 	refName: string;
   type: string;
   default: any
 }
 
-export interface XCallback {
+export interface useCallback {
 	funcName: string;
   funcContent: string;
   // 用于格式化函数参数类型定义，没有则不处理
@@ -32,18 +32,18 @@ export interface XCallback {
   async: boolean;
 }
 
-export interface XMemo {
+export interface useMemo {
 	memoName: string;
   funcContent: string;
   deps: string[];
 }
 
-export interface XEffect {
+export interface useEffect {
 	funcContent: string;
   deps: string[];
 }
 
-export interface XLayoutEffect {
+export interface useLayoutEffect {
 	funcContent: string;
   deps: string[];
 }
@@ -52,13 +52,15 @@ export interface XLayoutEffect {
  * 搭建组件容器
  */
 export interface Container {
-  XState: XState[];
-  XRef: XRef[];
-  XMemo: XMemo[];
-  XEffect: XEffect[];
-  XLayoutEffect: XLayoutEffect[];
-  XCallback: XCallback[];
-  XReturn: Component[];
+  Hooks: {
+    useState: useState[];
+    useRef: useRef[];
+    useMemo: useMemo[];
+    useEffect: useEffect[];
+    useLayoutEffect: useLayoutEffect[];
+    useCallback: useCallback[];
+  },
+  Return: Component[];
 }
 
 export interface Component {

@@ -32,6 +32,7 @@ const testComponent = {
                             valueType: 'string'
                         }
                     ],
+                    children: []
                 }
             }
         ]
@@ -39,46 +40,65 @@ const testComponent = {
 }
 
 const testContainer = {
-    xState: [
-        {
-            stateName: 'name',
-            type: 'string',
-            default: 'tim'
-        },
-        {
-            stateName: 'age',
-            type: 'string',
-            default: () => 2
-        }
-    ],
-    XRef: [
-        {
-            refName: 'timer',
-            type: 'any',
-            default: null
-        }
-    ],
-    XEffect: [
-        {
-            effectContent: () => {console.log(name)},
-            deps: ['name']
-        }
-    ],
-    XCallback: [
-        {
-            funcName: 'test',
-            funcContent: async (a) => console.log(1),
-            params: [
-                {
-                    name: 'a',
-                    type: 'string'
-                }
-            ],
-            deps: ['age']
-
-        }
-    ],
-    XReturn: [testComponent]
+    componentName: 'Test',
+    Hooks: {
+        useState: [
+            {
+                stateName: 'name',
+                type: 'string',
+                default: 'tim'
+            },
+            {
+                stateName: 'age',
+                type: 'string',
+                default: () => 2
+            }
+        ],
+        useRef: [
+            {
+                refName: 'timer',
+                type: 'any',
+                default: null
+            }
+        ],
+        useMemo: [],
+        useEffect: [
+            {
+                funcContent: (() => {console.log(name)}).toString(),
+                deps: ['name']
+            }
+        ],
+        useLayoutEffect: [],
+        useCallback: [
+            {
+                funcName: 'test',
+                funcContent: (async (a) => console.log(1)).toString(),
+                params: [
+                    {
+                        name: 'a',
+                        type: 'string'
+                    }
+                ],
+                deps: ['age']
+    
+            },
+            {
+                funcName: 'test1',
+                funcContent: (() => {const a = () => 1}).toString(),
+                params: [
+                    {
+                        name: 'a',
+                        type: 'string'
+                    }
+                ],
+                deps: ['age']
+    
+            }
+        ],
+    },
+    Return: [testComponent]
 }
 
 console.log(compileTemplate(testContainer))
+
+// {{$imports.utils.formateComponentJSX($data.Return)}}
